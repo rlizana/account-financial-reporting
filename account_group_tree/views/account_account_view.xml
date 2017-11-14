@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 - Trey - Roberto Lizana
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_account_hierarchy_list" model="ir.ui.view">
+        <field name="name">account.account.list</field>
+        <field name="model">account.account</field>
+        <field name="field_parent">group_child_ids</field>
+        <field name="arch" type="xml">
+            <tree string="Chart of accounts" toolbar="1" >
+                <field name="group_child_ids" invisible="1"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="user_type_id"/>
+                <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency"/>
+                <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_account_hierarchy_form" model="ir.actions.act_window">
+        <field name="name">Chart of Accounts tree</field>
+        <field name="res_model">account.account</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="account.view_account_search"/>
+        <field name="view_id" ref="view_account_hierarchy_list"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add an account.
+          </p><p>
+            An account is part of a ledger allowing your company
+            to register all kinds of debit and credit transactions.
+            Companies present their annual accounts in two main parts: the
+            balance sheet and the income statement (profit and loss
+            account). The annual accounts of a company are required by law
+            to disclose a certain amount of information.
+          </p>
+        </field>
+    </record>
+    <menuitem action="action_account_hierarchy_form" id="menu_action_account_hierarchy_form" parent="account.account_account_menu" groups="account.group_account_user" sequence="0"/>
+
+</odoo>
